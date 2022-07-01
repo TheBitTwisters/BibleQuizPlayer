@@ -6,8 +6,7 @@ const login = (params) => {
       method: 'post',
       url: '/auth/player/login',
       data: {
-        name: params.name,
-        pin: params.pin
+        name: params.name
       }
     }).then(response => {
       resolve(response.data)

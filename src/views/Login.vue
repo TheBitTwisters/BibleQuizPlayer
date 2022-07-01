@@ -6,7 +6,7 @@
         Login
       </v-card-title>
       <v-card-text>
-        <v-form>
+        <v-form @submit.prevent="login">
 
           <v-text-field label="Name" placeholder="Enter name"
             v-model="form.data.name"
@@ -32,8 +32,7 @@ export default {
   data: () => ({
     form: {
       data: {
-        name: '',
-        pin: ''
+        name: ''
       },
       valid: false,
       showPassword: false,
