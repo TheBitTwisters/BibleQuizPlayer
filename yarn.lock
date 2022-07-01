@@ -1389,6 +1389,11 @@
   resolved "https://registry.npmmirror.com/@vue/cli-plugin-vuex/-/cli-plugin-vuex-4.5.18.tgz#fca8f86c8186c78b12b8cbe7d8427cf22d84630e"
   integrity sha512-8lnxtRJLa6Ki4FFYDtVA6Q4CRSjzWPXRkY7v8779nNq8eVLpGEyOtqDgu/VvNBs7EGKmveXZFNu8dUsfuTt7qA==
 
+"@vue/cli-plugin-vuex@~4.5.15":
+  version "4.5.19"
+  resolved "https://registry.npmmirror.com/@vue/cli-plugin-vuex/-/cli-plugin-vuex-4.5.19.tgz#2452de58eb66ed873852bea45e6e06b57d842b47"
+  integrity sha512-DUmfdkG3pCdkP7Iznd87RfE9Qm42mgp2hcrNcYQYSru1W1gX2dG/JcW8bxmeGSa06lsxi9LEIc/QD1yPajSCZw==
+
 "@vue/cli-service@~4.5.15":
   version "4.5.18"
   resolved "https://registry.npmmirror.com/@vue/cli-service/-/cli-service-4.5.18.tgz#d43bb3b7ef47d431227ed03ad4692662d8452a70"
@@ -8461,6 +8466,11 @@ vuetify@^2.6.0:
   version "2.6.7"
   resolved "https://registry.npmmirror.com/vuetify/-/vuetify-2.6.7.tgz#9c6fb7d20e1c4b07417084cbe5996c2dadf099df"
   integrity sha512-1XxCv6mt1UsKaW7rqow0hF/jOw1ijT/fHH9euWLHgSVIcPAx8D2AY5ihTCBbMmV53Hj/YD0DUvzyk6cM/OGHvw==
+
+vuex@^3.4.0:
+  version "3.6.2"
+  resolved "https://registry.npmmirror.com/vuex/-/vuex-3.6.2.tgz#236bc086a870c3ae79946f107f16de59d5895e71"
+  integrity sha512-ETW44IqCgBpVomy520DT5jf8n0zoCac+sxWnn+hMe/CzaSejb/eVw2YToiXYX+Ex/AuHHia28vWTq4goAexFbw==
 
 watchpack-chokidar2@^2.0.1:
   version "2.0.1"
