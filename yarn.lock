@@ -1377,6 +1377,13 @@
   dependencies:
     "@vue/cli-shared-utils" "^4.5.18"
 
+"@vue/cli-plugin-router@~4.5.15":
+  version "4.5.19"
+  resolved "https://registry.npmmirror.com/@vue/cli-plugin-router/-/cli-plugin-router-4.5.19.tgz#a7feea7024b83a0af77fc940d1637d3ce2f92e1f"
+  integrity sha512-3icGzH1IbVYmMMsOwYa0lal/gtvZLebFXdE5hcQJo2mnTwngXGMTyYAzL56EgHBPjbMmRpyj6Iw9k4aVInVX6A==
+  dependencies:
+    "@vue/cli-shared-utils" "^4.5.19"
+
 "@vue/cli-plugin-vuex@^4.5.18":
   version "4.5.18"
   resolved "https://registry.npmmirror.com/@vue/cli-plugin-vuex/-/cli-plugin-vuex-4.5.18.tgz#fca8f86c8186c78b12b8cbe7d8427cf22d84630e"
@@ -1449,6 +1456,24 @@
   version "4.5.18"
   resolved "https://registry.npmmirror.com/@vue/cli-shared-utils/-/cli-shared-utils-4.5.18.tgz#372e835d2b30c325d2bb47f7d477a6942d882b19"
   integrity sha512-rYX8watG/+SFmkedXMZ3hJP+26/bz80f9zG9dMUfBMqTAqIDGICDtuP4H4QXZL3PCKI/HWFCMhRWf2wO4eGEPg==
+  dependencies:
+    "@achrinza/node-ipc" "9.2.2"
+    "@hapi/joi" "^15.0.1"
+    chalk "^2.4.2"
+    execa "^1.0.0"
+    launch-editor "^2.2.1"
+    lru-cache "^5.1.1"
+    open "^6.3.0"
+    ora "^3.4.0"
+    read-pkg "^5.1.1"
+    request "^2.88.2"
+    semver "^6.1.0"
+    strip-ansi "^6.0.0"
+
+"@vue/cli-shared-utils@^4.5.19":
+  version "4.5.19"
+  resolved "https://registry.npmmirror.com/@vue/cli-shared-utils/-/cli-shared-utils-4.5.19.tgz#cc389b1de1b05073804c0fe9b4b083b928ef6130"
+  integrity sha512-JYpdsrC/d9elerKxbEUtmSSU6QRM60rirVubOewECHkBHj+tLNznWq/EhCjswywtePyLaMUK25eTqnTSZlEE+g==
   dependencies:
     "@achrinza/node-ipc" "9.2.2"
     "@hapi/joi" "^15.0.1"
@@ -8391,6 +8416,11 @@ vue-loader@^15.9.2:
     loader-utils "^1.1.0"
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
+
+vue-router@^3.2.0:
+  version "3.5.4"
+  resolved "https://registry.npmmirror.com/vue-router/-/vue-router-3.5.4.tgz#c453c0b36bc75554de066fefc3f2a9c3212aca70"
+  integrity sha512-x+/DLAJZv2mcQ7glH2oV9ze8uPwcI+H+GgTgTmb5I55bCgY3+vXWIsqbYUzbBSZnwFHEJku4eoaH/x98veyymQ==
 
 vue-style-loader@^4.1.0, vue-style-loader@^4.1.2:
   version "4.1.3"
