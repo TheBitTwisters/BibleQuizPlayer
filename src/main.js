@@ -4,6 +4,8 @@ import vuetify from './plugins/vuetify'
 import router from './router'
 import store from './store'
 
+import '@/filters/datetime'
+
 Vue.config.productionTip = false
 
 new Vue({

@@ -13,6 +13,10 @@
             outlined required hide-details>
           </v-text-field>
 
+          <v-btn @click="login">
+            Login
+          </v-btn>
+
           <v-alert v-if="form.message != ''" dense>
             {{ form.message }}
           </v-alert>
@@ -35,7 +39,6 @@ export default {
         name: ''
       },
       valid: false,
-      showPassword: false,
       submitting: false,
       message: '',
       success: false
