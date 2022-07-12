@@ -34,11 +34,11 @@ export default {
     games: []
   }),
   mounted () {
-    this.getPlayGames()
+    this.getGames()
   },
   methods: {
-    getPlayGames: function () {
-      apiGames.getPlayGames()
+    getGames: function () {
+      apiGames.getGames()
         .then(response => {
           this.games = response.games
         }).catch(err => {

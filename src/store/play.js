@@ -16,7 +16,7 @@ const play = {
   mutations: {},
   actions: {
     'play-game': function ({ state }, params) {
-      apiGames.getPlayGame({ game_id: params.game_id })
+      apiGames.getGame({ game_id: params.game_id })
         .then(response => {
           state.game = response.game
           state.levels = response.levels

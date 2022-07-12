@@ -4,7 +4,7 @@ const login = (params) => {
   return new Promise((resolve, reject) => {
     axios({
       method: 'post',
-      url: '/auth/player/login',
+      url: '/auth/player',
       data: {
         name: params.name
       }

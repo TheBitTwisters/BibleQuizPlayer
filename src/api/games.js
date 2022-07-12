@@ -1,11 +1,11 @@
 import axios from '@/plugins/axios'
 import store from '@/store'
 
-const getPlayGames = () => {
+const getGames = () => {
   return new Promise((resolve, reject) => {
     axios({
       method: 'get',
-      url: '/games/play',
+      url: '/games',
       headers: {
         'Authorization': store.getters.getSessionToken()
       }
@@ -20,11 +20,11 @@ const getPlayGames = () => {
   })
 }
 
-const getPlayGame = (params) => {
+const getGame = (params) => {
   return new Promise((resolve, reject) => {
     axios({
       method: 'get',
-      url: '/games/play/' + params.game_id,
+      url: '/games/' + params.game_id,
       headers: {
         'Authorization': store.getters.getSessionToken()
       }
@@ -40,6 +40,6 @@ const getPlayGame = (params) => {
 }
 
 export default {
-  getPlayGames,
-  getPlayGame
+  getGames,
+  getGame
 }
