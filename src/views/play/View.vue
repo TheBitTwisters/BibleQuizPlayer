@@ -69,7 +69,7 @@ export default {
     }
   },
   data: () => ({
-    choiceIndex: null,
+    choiceLabel: '',
     textAnswer: '',
     answeredQuestionID: 0
   }),

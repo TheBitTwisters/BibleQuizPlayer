@@ -1,5 +1,8 @@
 import router from '@/router'
 import apiGames from '@/api/games'
+import apiLevels from '@/api/levels'
+import apiQuestTypes from '@/api/quest_types'
+import apiQuestions from '@/api/questions'
 
 const play = {
   state: {
@@ -16,19 +19,33 @@ const play = {
   mutations: {},
   actions: {
     'play-game': function ({ state }, params) {
-      apiGames.getGame({ game_id: params.game_id })
-        .then(response => {
-          state.game = response.game
-          state.levels = response.levels
-          state.quest_types = response.quest_types
-          state.question = response.question || {
-            question: '',
-            choices: []
-          }
+      apiGames.getDetails({ game_id: params.game_id })
+        .then(rGames => {
+          apiLevels.getAll().then(rLevels => {
+            state.levels = rLevels.levels
+          })
+          apiQuestTypes.getAll().then(rTypes => {
+            state.quest_types = rTypes.quest_types
+          })
+          state.game = rGames.game
+          apiGames.getQuestions({ game_id: state.game.id })
+            .then(rQuestions => {
+              for (var question of rQuestions.questions) {
+                if (question.id == state.game.current_question_id) {
+                  state.question = question || {
+                    question: '',
+                    choices: []
+                  }
+                }
+              }
+            })
           if (router.currentRoute.name != 'Play') {
-            router.push('/play/' + response.game.id)
+            router.push('/play/' + rGames.game.id)
           }
         })
+    },
+    'submit-answer': function ({ state }, params) {
+      
     }
   },
   getters: {

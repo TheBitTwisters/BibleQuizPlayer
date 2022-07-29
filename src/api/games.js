@@ -20,7 +20,7 @@ const getGames = () => {
   })
 }
 
-const getGame = (params) => {
+const getDetails = (params) => {
   return new Promise((resolve, reject) => {
     axios({
       method: 'get',
@@ -39,7 +39,27 @@ const getGame = (params) => {
   })
 }
 
+const getQuestions = (params) => {
+  return new Promise((resolve, reject) => {
+    axios({
+      method: 'get',
+      url: `/games/${params.game_id}/questions`,
+      headers: {
+        'Authorization': store.getters.getSessionToken()
+      }
+    }).then(response => {
+      resolve(response.data)
+    }).catch(err => {
+      if (err.response.data) {
+        reject(err.response.data)
+      }
+      reject(err)
+    })
+  })
+}
+
 export default {
   getGames,
-  getGame
+  getDetails,
+  getQuestions
 }
