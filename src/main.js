@@ -5,6 +5,7 @@ import router from './router'
 import store from './store'
 
 import '@/filters/datetime'
+import '@/filters/ordinal'
 
 Vue.config.productionTip = false
 

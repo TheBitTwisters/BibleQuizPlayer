@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+import ViewTotalScores from '@/views/TotalScores'
+
 import ViewLogin from '@/views/Login'
 import ViewDashboard from '@/views/Dashboard'
 
@@ -11,6 +13,11 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
+    name: 'TotalScores',
+    component: ViewTotalScores
+  },
+  {
+    path: '/login',
     name: 'Login',
     component: ViewLogin
   },
