@@ -1,54 +1,48 @@
-import router from '@/router'
 import apiGames from '@/api/games'
 import apiLevels from '@/api/levels'
 import apiQuestTypes from '@/api/quest_types'
-import apiQuestions from '@/api/questions'
+//import apiQuestions from '@/api/questions'
 
 const play = {
   state: {
-    game: {
-      id: 0
-    },
+    game: undefined,
     levels: [],
     quest_types: [],
-    question: {
-      question: '',
-      choices: []
-    }
+    questions: [],
+    player: undefined
   },
-  mutations: {},
-  actions: {
-    'play-game': function ({ state }, params) {
-      apiGames.getDetails({ game_id: params.game_id })
-        .then(rGames => {
-          apiLevels.getAll().then(rLevels => {
-            state.levels = rLevels.levels
-          })
-          apiQuestTypes.getAll().then(rTypes => {
-            state.quest_types = rTypes.quest_types
-          })
-          state.game = rGames.game
-          apiGames.getQuestions({ game_id: state.game.id })
-            .then(rQuestions => {
-              for (var question of rQuestions.questions) {
-                if (question.id == state.game.current_question_id) {
-                  state.question = question || {
-                    question: '',
-                    choices: []
-                  }
-                }
-              }
-            })
-          if (router.currentRoute.name != 'Play') {
-            router.push('/play/' + rGames.game.id)
-          }
-        })
+  mutations: {
+    SET_PLAY_GAME (state, game) {
+      state.game = game
     },
-    'submit-answer': function ({ state }, params) {
-      
-    }
+    SET_PLAY_PLAYER (state, player) {
+      state.player = player
+    },
+  },
+  actions: {
+    'play-game': async function ({ state, commit }, params) {
+      try {
+        var response = {}
+        response = await apiLevels.getAll()
+        state.levels = response.levels
+        response = await apiQuestTypes.getAll()
+        state.quest_types = response.quest_types
+        response = await apiGames.getDetails({ game_id: params.game_id })
+        commit('SET_PLAY_GAME', response.game)
+        response = await apiGames.getQuestions({ game_id: params.game_id })
+        state.questions = response.questions
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    // 'submit-answer': function ({ state }, params) {
+    //
+    // }
   },
   getters: {
+    getPlayPlayer: (state) => () => {
+      return state.player
+    },
     getPlayGame: (state) => () => {
       return state.game
     },
@@ -78,7 +72,7 @@ const play = {
       return []
     },
     hasPlayGame: (state) => () => {
-      return state.game.id > 0
+      return state.game && state.game.id > 0
     },
     hasPlayCurrentQuestion: (state) => () => {
       return state.game.current_question_id > 0

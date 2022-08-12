@@ -1,7 +1,7 @@
 import axios from '@/plugins/axios'
 import store from '@/store'
 
-const getGames = () => {
+const getAll = () => {
   return new Promise((resolve, reject) => {
     axios({
       method: 'get',
@@ -59,7 +59,7 @@ const getQuestions = (params) => {
 }
 
 export default {
-  getGames,
+  getAll,
   getDetails,
   getQuestions
 }
