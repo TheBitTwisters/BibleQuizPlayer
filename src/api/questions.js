@@ -5,7 +5,7 @@ const submitAnswer = (params) => {
   return new Promise((resolve, reject) => {
     axios({
       method: 'post',
-      url: `/questions/${params.question_id}`,
+      url: `/questions/${params.question_id}/answer`,
       data: {
         answer: params.answer
       },

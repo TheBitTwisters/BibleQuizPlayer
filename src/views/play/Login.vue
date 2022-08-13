@@ -7,7 +7,7 @@
       <v-form @submit.prevent="login">
 
         <v-text-field label="Name" placeholder="Enter access name"
-          v-model="form.data.name"
+          v-model="form.data.pass"
           outlined required hide-details>
         </v-text-field>
 
@@ -32,7 +32,7 @@ export default {
   data: () => ({
     form: {
       data: {
-        name: ''
+        pass: ''
       },
       valid: false,
       submitting: false,

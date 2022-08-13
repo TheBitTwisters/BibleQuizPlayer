@@ -1,7 +1,4 @@
 import apiGames from '@/api/games'
-import apiLevels from '@/api/levels'
-import apiQuestTypes from '@/api/quest_types'
-//import apiQuestions from '@/api/questions'
 
 const play = {
   state: {
@@ -18,26 +15,29 @@ const play = {
     SET_PLAY_PLAYER (state, player) {
       state.player = player
     },
+    SET_PLAY_LEVELS (state, levels) {
+      state.levels = levels
+    },
+    SET_PLAY_QUEST_TYPES (state, types) {
+      state.quest_types = types
+    },
+    SET_PLAY_QUESTIONS (state, questions) {
+      state.questions = questions
+    }
   },
   actions: {
-    'play-game': async function ({ state, commit }, params) {
-      try {
-        var response = {}
-        response = await apiLevels.getAll()
-        state.levels = response.levels
-        response = await apiQuestTypes.getAll()
-        state.quest_types = response.quest_types
-        response = await apiGames.getDetails({ game_id: params.game_id })
-        commit('SET_PLAY_GAME', response.game)
-        response = await apiGames.getQuestions({ game_id: params.game_id })
-        state.questions = response.questions
-      } catch (err) {
-        console.log(err)
+    'play-refresh-game': function ({ state, commit, dispatch }) {
+      if (state.game != undefined) {
+        apiGames.getDetails({ game_id: state.game.id })
+          .then(response => {
+            commit('SET_PLAY_GAME', response.game)
+          }).finally(() => {
+            setTimeout(() => {
+              dispatch('play-refresh-game')
+            }, 1500)
+          })
       }
-    },
-    // 'submit-answer': function ({ state }, params) {
-    //
-    // }
+    }
   },
   getters: {
     getPlayPlayer: (state) => () => {
@@ -61,7 +61,7 @@ const play = {
           return question
         }
       }
-      return null
+      return undefined
     },
     getPlayCurrentQuestionChoices: (state) => () => {
       for (let question of state.questions) {

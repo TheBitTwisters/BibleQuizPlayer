@@ -5,9 +5,7 @@ const login = (params) => {
     axios({
       method: 'post',
       url: '/auth/player',
-      data: {
-        name: params.name
-      }
+      data: params
     }).then(response => {
       resolve(response.data)
     }).catch(err => {

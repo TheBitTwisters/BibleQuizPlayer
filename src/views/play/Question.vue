@@ -1,11 +1,14 @@
 <template>
   <v-card v-if="question">
 
-    <v-card-title v-text="question.question">
+    <v-card-title style="word-break: break-word;">
+      {{ question.question }}
     </v-card-title>
 
+    <v-divider></v-divider>
+
     <v-card-text v-if="choices.length == 4">
-      <v-btn-toggle
+      <v-btn-toggle block
         v-model="choiceIndex"
         @change="submitAnswer()">
         <v-btn>
@@ -24,7 +27,7 @@
     </v-card-text>
 
     <v-card-text v-if="choices.length == 2">
-      <v-btn-toggle
+      <v-btn-toggle block
         v-model="choiceIndex"
         @change="submitAnswer()">
         <v-btn>
@@ -49,27 +52,28 @@
 </template>
 
 <script>
-import apiAnswers from '@/api/answers'
+import apiAQuestions from '@/api/questions'
 
 export default {
   name: 'view-play',
   data: () => ({
+    choiceIndex: null,
     choiceLabel: '',
     textAnswer: '',
     answeredQuestionID: 0
   }),
   computed: {
     game: function () {
-      return this.$store.state.play.game
+      return this.$store.getters.getPlayGame()
     },
     question: function () {
-      return this.$store.state.play.question
+      return this.$store.getters.getPlayCurrentQuestion()
     },
     choices: function () {
-      return this.$store.state.play.question.choices
+      return this.$store.getters.getPlayCurrentQuestionChoices()
     },
     player: function () {
-      return this.$store.state.session.player
+      return this.$store.getters.getPlayPlayer()
     }
   },
   watch: {
@@ -82,15 +86,8 @@ export default {
     }
   },
   mounted () {
-    var self = this
-    setInterval(function () {
-      self.$store.dispatch('play-game', { game_id: self.game.id })
-    }, 1000)
   },
   methods: {
-    getGameDetails: function () {
-
-    },
     submitAnswer: function () {
       var answer = '', self = this
       if (this.choices.length >= 4) {
@@ -104,14 +101,23 @@ export default {
       } else {
         answer = this.textAnswer
       }
-      apiAnswers.submitAnswer({
+      apiAQuestions.submitAnswer({
         game_id: this.game.id,
         question_id: this.question.id,
         player_id: this.player.id,
         answer: answer
       }).then(response => {
         this.answeredQuestionID = self.question.id
-        alert(response.message)
+        this.$store.commit('SHOW_SNACKBAR', {
+          status: 'success',
+          message: response.message
+        })
+      }).catch(err => {
+        console.log(err)
+        this.$store.commit('SHOW_SNACKBAR', {
+          status: 'error',
+          message: err.message
+        })
       })
     }
   }
