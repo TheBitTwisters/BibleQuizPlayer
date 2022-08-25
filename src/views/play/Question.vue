@@ -1,67 +1,46 @@
 <template>
   <v-card v-if="question">
 
+    <v-card-text>
+      Current Question:
+      #{{question.order}}
+      {{getLevelByID(question.level_id).name}} |
+      {{getQuestTypeByID(question.type_id).name}} |
+      {{question.score}}PTS
+    </v-card-text>
+
+    <v-divider></v-divider>
+
     <v-card-title style="word-break: break-word;">
       {{ question.question }}
     </v-card-title>
 
+    <v-divider v-if="question.submitted_answer"></v-divider>
+    <v-card-text class="teal white--text" v-if="question.submitted_answer">
+      Submitted answer: {{ question.submitted_answer }}
+    </v-card-text>
+
     <v-divider></v-divider>
 
-    <v-card-text v-if="choices.length == 4">
-      <v-btn-toggle block
-        v-model="choiceIndex"
-        @change="submitAnswer()">
-        <v-btn>
-          A
-        </v-btn>
-        <v-btn>
-          B
-        </v-btn>
-        <v-btn>
-          C
-        </v-btn>
-        <v-btn>
-          D
-        </v-btn>
-      </v-btn-toggle>
-    </v-card-text>
-
-    <v-card-text v-if="choices.length == 2">
-      <v-btn-toggle block
-        v-model="choiceIndex"
-        @change="submitAnswer()">
-        <v-btn>
-          True
-        </v-btn>
-        <v-btn>
-          False
-        </v-btn>
-      </v-btn-toggle>
-    </v-card-text>
-
-    <v-card-text v-if="choices.length == 1">
-      <v-textarea outlined v-model="textAnswer">
-      </v-textarea>
-    </v-card-text>
-
-    <v-card-text v-if="answeredQuestionID > 0">
-      Answer submitted
-    </v-card-text>
+    <MultipleChoices v-if="choices.length == 4"/>
+    <TrueFalse v-if="choices.length == 2"/>
+    <Identification v-if="choices.length == 1"/>
 
   </v-card>
 </template>
 
 <script>
-import apiAQuestions from '@/api/questions'
+import MultipleChoices from './MultipleChoices'
+import TrueFalse from './TrueFalse'
+import Identification from './Identification'
 
 export default {
-  name: 'view-play',
-  data: () => ({
-    choiceIndex: null,
-    choiceLabel: '',
-    textAnswer: '',
-    answeredQuestionID: 0
-  }),
+  name: 'view-play-question',
+  components: {
+    MultipleChoices,
+    TrueFalse,
+    Identification
+  },
   computed: {
     game: function () {
       return this.$store.getters.getPlayGame()
@@ -76,49 +55,22 @@ export default {
       return this.$store.getters.getPlayPlayer()
     }
   },
-  watch: {
-    question: function (v) {
-      if (v.id != this.answeredQuestionID) {
-        this.answeredQuestionID = 0
-        this.choiceIndex = null
-        this.textAnswer = ''
-      }
-    }
-  },
-  mounted () {
-  },
   methods: {
-    submitAnswer: function () {
-      var answer = '', self = this
-      if (this.choices.length >= 4) {
-        if (this.choiceIndex == 3) answer = 'D'
-        if (this.choiceIndex == 2) answer = 'C'
-        if (this.choiceIndex == 1) answer = 'B'
-        if (this.choiceIndex == 0) answer = 'A'
-      } else if (this.choices.length >= 2) {
-        if (this.choiceIndex == 1) answer = 'False'
-        if (this.choiceIndex == 0) answer = 'True'
-      } else {
-        answer = this.textAnswer
+    getLevelByID: function (level_id) {
+      for (let level of this.$store.getters.getPlayLevels()) {
+        if (level_id == level.id) {
+          return level
+        }
       }
-      apiAQuestions.submitAnswer({
-        game_id: this.game.id,
-        question_id: this.question.id,
-        player_id: this.player.id,
-        answer: answer
-      }).then(response => {
-        this.answeredQuestionID = self.question.id
-        this.$store.commit('SHOW_SNACKBAR', {
-          status: 'success',
-          message: response.message
-        })
-      }).catch(err => {
-        console.log(err)
-        this.$store.commit('SHOW_SNACKBAR', {
-          status: 'error',
-          message: err.message
-        })
-      })
+      return { name: '' }
+    },
+    getQuestTypeByID: function (type_id) {
+      for (let type of this.$store.getters.getPlayQuestTypes()) {
+        if (type_id == type.id) {
+          return type
+        }
+      }
+      return { name: '' }
     }
   }
 }

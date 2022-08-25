@@ -1,12 +1,13 @@
 <template>
-  <v-bottom-navigation fixed grow color="teal" v-model="page" @change="gotoPage">
+  <v-bottom-navigation fixed horizontal grow height="36"
+    color="teal" v-model="page" @change="gotoPage">
 
-    <v-btn value="home">
-      <span>Home</span>
-      <v-icon>mdi-home</v-icon>
+    <v-btn text value="home">
+      <span>All Games Score</span>
+      <v-icon>mdi-counter</v-icon>
     </v-btn>
 
-    <v-btn value="play">
+    <v-btn text value="play">
       <span>Play</span>
       <v-icon>mdi-play</v-icon>
     </v-btn>
@@ -20,6 +21,13 @@ export default {
   data: () => ({
     page: 'home'
   }),
+  mounted () {
+    if (this.$router.currentRoute.name != 'TotalScores') {
+      this.page = 'play'
+    } else {
+      this.page = 'home'
+    }
+  },
   methods: {
     gotoPage: function (page) {
       switch (page) {

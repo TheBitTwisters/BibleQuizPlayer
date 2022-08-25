@@ -1,4 +1,5 @@
 import apiGames from '@/api/games'
+import apiQuestions from '@/api/questions'
 
 const play = {
   state: {
@@ -23,6 +24,21 @@ const play = {
     },
     SET_PLAY_QUESTIONS (state, questions) {
       state.questions = questions
+    },
+    SET_PLAY_UPDATE_QUESTION (state, question) {
+      for (let quest of state.questions) {
+        if (quest.id == question.id) {
+          quest.locked_at = question.locked_at || undefined
+          break
+        }
+      }
+    },
+    SET_PLAY_QUESTION_ANSWERED (state, params) {
+      for (let question of state.questions) {
+        if (question.id == params.question_id) {
+          question.submitted_answer = params.answer
+        }
+      }
     }
   },
   actions: {
@@ -31,12 +47,38 @@ const play = {
         apiGames.getDetails({ game_id: state.game.id })
           .then(response => {
             commit('SET_PLAY_GAME', response.game)
+            if (response.current_question) {
+              commit('SET_PLAY_UPDATE_QUESTION', response.current_question)
+            }
           }).finally(() => {
             setTimeout(() => {
               dispatch('play-refresh-game')
             }, 1500)
           })
       }
+    },
+    'play-submit-answer': function ({ state, commit }, params) {
+      apiQuestions.submitAnswer({
+        game_id: state.game.id,
+        question_id: params.question_id,
+        player_id: state.player.id,
+        answer: params.answer
+      }).then(response => {
+        commit('SET_PLAY_QUESTION_ANSWERED', {
+          question_id: params.question_id,
+          answer: params.answer
+        })
+        commit('SHOW_SNACKBAR', {
+          status: 'success',
+          message: response.message
+        })
+      }).catch(err => {
+        console.log(err)
+        commit('SHOW_SNACKBAR', {
+          status: 'error',
+          message: err.message
+        })
+      })
     }
   },
   getters: {
@@ -70,6 +112,14 @@ const play = {
         }
       }
       return []
+    },
+    isPlayCurrentQuestionLocked: (state) => () => {
+      for (let question of state.questions) {
+        if (question.id == state.game.current_question_id) {
+          return question.locked_at != undefined
+        }
+      }
+      return false
     },
     hasPlayGame: (state) => () => {
       return state.game && state.game.id > 0

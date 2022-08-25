@@ -1,23 +1,22 @@
 <template>
   <v-card>
     <v-card-title>
-      Login
+      Bible Quiz
     </v-card-title>
     <v-card-text>
       <v-form @submit.prevent="login">
 
-        <v-text-field label="Name" placeholder="Enter access name"
+        <v-text-field label="Name" placeholder="Enter access name" class="mb-3"
           v-model="form.data.pass"
-          outlined required hide-details>
+          dense outlined required hide-details>
         </v-text-field>
 
-        <v-btn @click="login">
-          Login
-        </v-btn>
-
-        <v-alert v-if="form.message != ''" dense>
-          {{ form.message }}
-        </v-alert>
+        <div class="d-flex">
+          <v-spacer></v-spacer>
+          <v-btn @click="login">
+            Play
+          </v-btn>
+        </div>
 
       </v-form>
     </v-card-text>
@@ -36,7 +35,6 @@ export default {
       },
       valid: false,
       submitting: false,
-      message: '',
       success: false
     }
   }),
@@ -46,7 +44,6 @@ export default {
       this.form.message = ''
       apiAuth.login(this.form.data)
         .then(data => {
-          this.form.message = data.message
           this.$store.commit('SET_SESSION', data.session)
           this.$store.commit('SET_PLAY_PLAYER', data.player)
           this.$store.commit('SET_PLAY_GAME', data.game)
@@ -54,10 +51,10 @@ export default {
         })
         .catch(err => {
           console.log(err)
-          this.form.message = err.message
-        })
-        .finally(() => {
-          this.form.submitting = false
+          this.$store.commit('SHOW_SNACKBAR', {
+            status: 'error',
+            message: err.message
+          })
         })
     }
   }
