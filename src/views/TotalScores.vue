@@ -1,21 +1,23 @@
 <template>
   <v-card>
     <v-card-title>
-      Total Scores
+      Bible Quiz Total Scores
     </v-card-title>
 
     <v-divider></v-divider>
 
     <v-list>
       <div v-for="(score, index) in scores" :key="score.name">
-        <v-list-item>
+        <v-list-item :class="getRankColor(index)">
           <v-list-item-icon>
-            {{ index + 1 | formatOrdinal }}
+            <v-chip outlined class="align-center justify-center" style="min-width: 48px;">
+              {{ index + 1 }}<sup>{{ index + 1 | formatOrdinalOnly }}</sup>
+            </v-chip>
           </v-list-item-icon>
           <v-list-item-content>
             {{ score.name }}
           </v-list-item-content>
-          <v-list-item-action>
+          <v-list-item-action class="justify-end" style="min-width: 48px;">
             {{ score.score }}
           </v-list-item-action>
         </v-list-item>
@@ -59,6 +61,15 @@ export default {
         }).finally(() => {
           this.loadingScores = false
         })
+    },
+    getRankColor: function (index) {
+      if (index == 0)
+        return 'amber'
+      else if (index == 1)
+        return 'grey lighten-1'
+      else if (index == 2)
+        return 'brown lighten-3'
+      return ''
     }
   }
 }
