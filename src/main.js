@@ -6,6 +6,7 @@ import store from './store'
 
 import '@/filters/datetime'
 import '@/filters/ordinal'
+import '@/filters/numeric'
 
 Vue.config.productionTip = false
 

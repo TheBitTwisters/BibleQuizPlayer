@@ -18,7 +18,7 @@
             {{ score.name }}
           </v-list-item-content>
           <v-list-item-action class="justify-end" style="min-width: 48px;">
-            {{ score.score }}
+            {{ score.score | numeric }}
           </v-list-item-action>
         </v-list-item>
         <v-divider></v-divider>
