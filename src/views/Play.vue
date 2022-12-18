@@ -1,28 +1,21 @@
 <template>
-  <div>
+  <v-container>
 
-    <Login v-if="!isSessionActive"/>
-    <div v-else>
+    <GameDetails/>
+    <Question v-if="question != undefined"/>
 
-      <GameDetails/>
-      <Question v-if="question != undefined"/>
-
-    </div>
-
-  </div>
+  </v-container>
 </template>
 
 <script>
-import Login from './Login'
-import GameDetails from './GameDetails'
-import Question from './Question'
+import GameDetails from '@/components/GameDetails'
+import Question from '@/components/Question'
 import apiLevels from '@/api/levels'
 import apiQuestTypes from '@/api/quest_types'
 
 export default {
   name: 'view-play',
   components: {
-    Login,
     GameDetails,
     Question
   },

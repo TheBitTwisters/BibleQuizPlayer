@@ -1,7 +1,6 @@
 <template>
   <v-app>
     <Snackbar/>
-    <BottomNav/>
     <v-main class="grey lighten-2">
       <v-container>
         <router-view/>
@@ -12,19 +11,11 @@
 
 <script>
 import Snackbar from '@/components/Snackbar'
-import BottomNav from '@/components/BottomNav'
 
 export default {
   name: 'App',
   components: {
-    Snackbar,
-    BottomNav
+    Snackbar
   }
 };
 </script>
-
-<style>
-body {
-  padding-bottom: 36px;
-}
-</style>

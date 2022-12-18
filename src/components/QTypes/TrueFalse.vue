@@ -41,10 +41,12 @@ export default {
           answer = this.choices[i].label
         }
       }
-      this.$store.dispatch('play-submit-answer', {
-        question_id: this.question.id,
-        answer: answer
-      })
+      if (answer != '') {
+        this.$store.dispatch('play-submit-answer', {
+          question_id: this.question.id,
+          answer: answer
+        })
+      }
     }
   }
 }

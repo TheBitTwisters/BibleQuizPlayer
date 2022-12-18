@@ -30,7 +30,6 @@ export default {
         question_id: this.question.id,
         answer: this.answer
       })
-      this.answer = ''
     }
   }
 }

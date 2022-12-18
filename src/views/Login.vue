@@ -1,33 +1,38 @@
 <template>
-  <v-card>
-    <v-card-title>
-      Bible Quiz
-    </v-card-title>
-    <v-card-text>
-      <v-form @submit.prevent="login">
+  <v-container>
+    <v-card>
+      <v-card-title>
+        Play Bible Quiz
+      </v-card-title>
+      <v-card-text>
+        <v-form @submit.prevent="login">
 
-        <v-text-field label="Name" placeholder="Enter access name" class="mb-3"
-          v-model="form.data.pass"
-          dense outlined required hide-details>
-        </v-text-field>
+          <v-text-field label="Access Code" placeholder="Enter access code" class="mb-3"
+            v-model="form.data.pass"
+            dense outlined required hide-details>
+          </v-text-field>
 
-        <div class="d-flex">
-          <v-spacer></v-spacer>
-          <v-btn @click="login">
-            Play
-          </v-btn>
-        </div>
+          <div class="d-flex">
+            <v-btn to="/">
+              Cancel
+            </v-btn>
+            <v-spacer></v-spacer>
+            <v-btn @click="login">
+              Play
+            </v-btn>
+          </div>
 
-      </v-form>
-    </v-card-text>
-  </v-card>
+        </v-form>
+      </v-card-text>
+    </v-card>
+  </v-container>
 </template>
 
 <script>
 import apiAuth from '@/api/auth'
 
 export default {
-  name: 'view-play-login',
+  name: 'view-login',
   data: () => ({
     form: {
       data: {
@@ -47,7 +52,7 @@ export default {
           this.$store.commit('SET_SESSION', data.session)
           this.$store.commit('SET_PLAY_PLAYER', data.player)
           this.$store.commit('SET_PLAY_GAME', data.game)
-          this.$router.go()
+          this.$router.go('/play')
         })
         .catch(err => {
           console.log(err)

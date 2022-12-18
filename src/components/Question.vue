@@ -30,9 +30,9 @@
 </template>
 
 <script>
-import MultipleChoices from './MultipleChoices'
-import TrueFalse from './TrueFalse'
-import Identification from './Identification'
+import MultipleChoices from './QTypes/MultipleChoices'
+import TrueFalse from './QTypes/TrueFalse'
+import Identification from './QTypes/Identification'
 
 export default {
   name: 'view-play-question',

@@ -1,21 +1,23 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import ViewTotalScores from '@/views/TotalScores'
-import ViewPlay from '@/views/play/View'
-
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'TotalScores',
-    component: ViewTotalScores
+    name: 'Splash',
+    component: () => import('@/views/Splash')
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('@/views/Login')
   },
   {
     path: '/play',
     name: 'Play',
-    component: ViewPlay
+    component: () => import('@/views/Play')
   }
 ]
 
