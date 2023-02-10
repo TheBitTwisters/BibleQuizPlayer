@@ -3,6 +3,7 @@
     <v-list-item-group active-class="info"
       v-model="choiceIndex" @change="submitAnswer">
       <div v-for="choice in choices" :key="choice.id">
+        <v-divider></v-divider>
         <v-list-item>
           <v-list-item-content>
             {{ choice.label }}

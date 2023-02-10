@@ -30,7 +30,17 @@ export default {
       return this.$store.getters.isSessionActive() && this.$store.getters.getPlayPlayer() != undefined
     }
   },
+  watch: {
+    isSessionActive(active) {
+      if (!active) {
+        this.$router.push('/')
+      }
+    }
+  },
   mounted () {
+    if (!this.isSessionActive) {
+      this.$router.push('/')
+    }
     this.getLevels()
     this.getQuestTypes()
   },

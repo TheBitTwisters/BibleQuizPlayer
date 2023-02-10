@@ -7,7 +7,8 @@ const play = {
     levels: [],
     quest_types: [],
     questions: [],
-    player: undefined
+    player: undefined,
+    passplay_question_id: 0
   },
   mutations: {
     SET_PLAY_GAME (state, game) {
@@ -39,6 +40,9 @@ const play = {
           question.submitted_answer = params.answer
         }
       }
+    },
+    SET_PASSPLAY_QUESTION_ID (state, question_id) {
+      state.passplay_question_id = question_id
     }
   },
   actions: {
@@ -56,6 +60,16 @@ const play = {
             }, 1500)
           })
       }
+    },
+    'play-submit-passplay': function ({ state, commit }, params) {
+      apiQuestions.passplay({
+        question_id: params.question_id,
+        attendance_id: state.player.id,
+        play: params.play
+      })
+        .then(response => {
+          commit('SET_PASSPLAY_QUESTION_ID', response.question_id)
+        })
     },
     'play-submit-answer': function ({ state, commit }, params) {
       apiQuestions.submitAnswer({
@@ -112,6 +126,9 @@ const play = {
         }
       }
       return []
+    },
+    getPassPlayQuestionID: (state) => () => {
+      return state.passplay_question_id
     },
     isPlayCurrentQuestionLocked: (state) => () => {
       for (let question of state.questions) {

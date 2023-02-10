@@ -13,9 +13,6 @@
           </v-text-field>
 
           <div class="d-flex">
-            <v-btn to="/">
-              Cancel
-            </v-btn>
             <v-spacer></v-spacer>
             <v-btn @click="login">
               Play
@@ -52,7 +49,7 @@ export default {
           this.$store.commit('SET_SESSION', data.session)
           this.$store.commit('SET_PLAY_PLAYER', data.player)
           this.$store.commit('SET_PLAY_GAME', data.game)
-          this.$router.go('/play')
+          this.$router.push('/play')
         })
         .catch(err => {
           console.log(err)

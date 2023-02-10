@@ -1,32 +1,49 @@
 <template>
-  <v-card v-if="question">
+  <div>
+    <v-card v-if="!hideQuestion">
 
-    <v-card-text>
-      Current Question:
-      #{{question.order}}
-      {{getLevelByID(question.level_id).name}} |
-      {{getQuestTypeByID(question.type_id).name}} |
-      {{question.score}}PTS
-    </v-card-text>
+      <v-card-text>
+        Question #{{question.order}} -
+        {{getLevelByID(question.level_id).name}} -
+        {{getQuestTypeByID(question.type_id).name}} -
+        {{question.score}}PTS
+      </v-card-text>
 
-    <v-divider></v-divider>
+      <v-divider></v-divider>
 
-    <v-card-title style="word-break: break-word;">
-      {{ question.question }}
-    </v-card-title>
+      <v-card-title style="word-break: break-word;">
+        {{ question.question }}
+      </v-card-title>
 
-    <v-divider v-if="question.submitted_answer"></v-divider>
-    <v-card-text class="teal white--text" v-if="question.submitted_answer">
-      Submitted answer: {{ question.submitted_answer }}
-    </v-card-text>
+      <v-divider v-if="question.submitted_answer"></v-divider>
+      <v-card-text class="teal white--text" v-if="question.submitted_answer">
+        Submitted answer: {{ question.submitted_answer }}
+      </v-card-text>
 
-    <v-divider></v-divider>
+      <MultipleChoices v-if="choices.length == 4"/>
+      <TrueFalse v-if="choices.length == 2"/>
+      <Identification v-if="choices.length == 1"/>
 
-    <MultipleChoices v-if="choices.length == 4"/>
-    <TrueFalse v-if="choices.length == 2"/>
-    <Identification v-if="choices.length == 1"/>
+    </v-card>
+    <v-card v-else>
 
-  </v-card>
+      <v-card-text>
+        Question #{{question.order}} -
+        {{getLevelByID(question.level_id).name}} -
+        {{getQuestTypeByID(question.type_id).name}} -
+        {{question.score}}PTS
+      </v-card-text>
+
+      <v-divider></v-divider>
+
+      <v-card-text class="text-center">
+        <v-btn @click="passorplay(0)">Pass</v-btn>
+        <span>&nbsp; or &nbsp;</span>
+        <v-btn @click="passorplay(1)">Play</v-btn>
+      </v-card-text>
+
+    </v-card>
+  </div>
 </template>
 
 <script>
@@ -53,6 +70,19 @@ export default {
     },
     player: function () {
       return this.$store.getters.getPlayPlayer()
+    },
+    passplay_question_id: function () {
+      return this.$store.getters.getPassPlayQuestionID()
+    },
+    hideQuestion: function () {
+      if (!this.question.passplay) {
+        return false
+      } else {
+        if (this.question.id == this.passplay_question_id) {
+          return false
+        }
+      }
+      return true
     }
   },
   methods: {
@@ -71,6 +101,12 @@ export default {
         }
       }
       return { name: '' }
+    },
+    passorplay: function (play) {
+      this.$store.dispatch('play-submit-passplay', {
+        question_id: this.question.id,
+        play: play
+      })
     }
   }
 }

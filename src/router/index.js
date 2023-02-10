@@ -6,11 +6,6 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Splash',
-    component: () => import('@/views/Splash')
-  },
-  {
-    path: '/login',
     name: 'Login',
     component: () => import('@/views/Login')
   },

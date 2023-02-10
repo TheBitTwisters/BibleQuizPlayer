@@ -72,7 +72,7 @@ export default {
     },
     logout: function () {
       this.$store.commit('SET_PLAY_PLAYER', undefined)
-      this.$router.go()
+      this.$router.push('/')
     }
   }
 }
