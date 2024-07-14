@@ -1,14 +1,16 @@
-import axios from 'axios'
+import axios from 'axios';
 // import store from '@/store'
 
+const ip = '192.168.0.100';
+
 const instance = axios.create({
-  baseURL: 'http://192.168.11.11:3000/',
+  baseURL: `http://${ip}:3000/`,
   withCredentials: false,
   responseType: 'json',
   headers: {
-    'Content-Type': 'application/json'
-  }
-})
+    'Content-Type': 'application/json',
+  },
+});
 
 // instance.interceptors.request.use(
 //   (request) => {
@@ -34,4 +36,4 @@ const instance = axios.create({
 //   }
 // )
 
-export default instance
+export default instance;
